@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplictionUser> signInManager
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+    <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/twitter-bootstrap/js/bootstrap.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <style>
+        .space {
+            margin-top: 20px
+        }
+
+        input[type="text"] {
+            width: 250px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+    @RenderSection("Head", false)
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar-inverse">
+                <div class="navbar-brand">
+                    Daer Academy
+                </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-target="#menu1" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="menu1" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+
+
+                            <li>
+                                <a asp-area="" asp-controller="Employee" asp-action="NewEmployee">New Employee</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Employee" asp-action="EmployeeList">Emoloyee List</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Department" asp-action="Department">Department </a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Department" asp-action="DepartmentList">Department List</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Account" asp-action="Logout">LogOut</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="Account" asp-action="LogIn">LogIn</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+
+
+                            <li>
+                                <a asp-area="" asp-controller="Account" asp-action="AddRole">Add Role</a>
+                            </li>
+                        }
+                    </ul>
+                        
+                    </div>
+
+                </nav>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    @RenderSection("Body", false)
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </body>
+</html>

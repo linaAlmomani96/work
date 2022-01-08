@@ -1,0 +1,56 @@
+﻿@model List<Department>
+@{
+    ViewData["Title"] = "Department List";
+}
+@section Head{
+    <script src="~/js/JavaScript.js">
+
+       
+
+    </script>
+
+}
+@section Body{
+    <form method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h1>Department List</h1>
+                </div>
+            </div>
+            <div class="row space">
+                <div class="col-md-2 bold">Name</div>
+                <div class="col-md-3"><input type="text" class="form-control" name="txtName" /></div>
+                <div class="col-md-1"><input type="submit" value="Search" class="btn btn-block" asp-action="Search" /></div>
+            </div>
+            <div class="row space">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Department item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>
+                                    <a asp-action="GetById" asp-route-id="@item.Id">Edit</a>|
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>|
+                                    @*<a asp-action="DisplayEmployee" onclick="show()" asp-route-id="@item.Id">Employees</a>*@
+                                    <a asp-action="DisplayEmployee" asp-route-id="@item.Id">Employees</a>
+                                    <a asp-action="Count" asp-route-id="@item.Id">Count</a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+}

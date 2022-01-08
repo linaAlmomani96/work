@@ -1,0 +1,202 @@
+﻿@model VMEmployee;
+@{
+    ViewData["Title"] = "New Employee";
+}
+@section Head{
+    <script src="~/js/JavaScript.js"></script>
+    <script>
+        $(document).ready(function () {
+            var id = $("#employee_country_id").val();
+            $.ajax({
+                type: 'get',
+                url: "/Task1MVC/Employee/LoadCityCountry?id=" + id + "",
+                success: function (data) {
+                    data.forEach(function (object) {
+                        $("#employee_City_Id").append("<option value=" + object.id + ">" + object.name + "</option>");
+                         
+                    })
+                },
+                error: function () {
+                    alert("Error Occuired");
+                }
+              
+
+            });
+
+            $("#employee_country_id").change(function () {
+                //debugger;
+                var id = $("#employee_country_id").val();
+                $("#employee_City_Id option").each(function () {
+                    $(this).remove();
+                })
+                $.ajax({
+                    type: 'get',
+                    url: "/Task1MVC/Employee/LoadCityCountry?id=" + id + "",
+                    success: function (data) {
+                        //debugger;
+                        data.forEach(function (object) {
+                            //debugger;
+                            $("#employee_City_Id").append("<option value=" + object.id + ">" + object.name + "</option>");
+
+                        })
+
+                    },
+                    error: function () {
+                        alert("Error Occuired");
+                    }
+                })
+
+            })
+
+
+
+
+
+        })
+
+    </script>
+
+}
+@section Body{
+    <form method="post" enctype="multipart/form-data" id="newEmployee">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1">
+                    <h1 class="bold">Employee</h1>
+                </div>
+            </div>
+            <div class="row space">
+                <input type="hidden" asp-for="employee.Id" />
+                <div class="col-md-1 bold">First Name</div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="employee.FirstName" />
+                    <span asp-validation-for="employee.FirstName"></span>
+                </div>
+                <div class="col-md-1 bold">Last Name</div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="employee.LastName" />
+                    <span asp-validation-for="employee.LastName"></span>
+
+                </div>
+            </div>
+            <div class="row space">
+                <div class="col-md-1 bold">Phone</div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="employee.Phone" />
+                    <span asp-validation-for="employee.Phone"></span>
+
+                </div>
+                <div class="col-md-1 bold">Gender</div>
+                <div class="col-md-4">
+                    <select asp-for="employee.Gender">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row space">
+                <div class="col-md-1 bold">Country</div>
+                <div class="col-md-4"><select asp-items='new SelectList(Model.countries,"Id","Name")' asp-for="employee.country_id"></select></div>
+                <div class="col-md-1 bold">City</div>
+                @*<div class="col-md-4"><select asp-items='new SelectList(Model.cities,"Id","Name")'  asp-for="employee.City_Id"></select></div>*@
+                <div class="col-md-4"><select asp-for="employee.City_Id"></select></div>
+
+            </div>
+            <div class="row space">
+                <div class="col-md-1 bold">Adress</div>
+                <div class="col-md-4"><input type="text" class="form-control" asp-for="employee.Address" /></div>
+                <div class="col-md-1 bold">Email</div>
+                <div class="col-md-4"><input type="text" class="form-control" asp-for="employee.Email" /></div>
+            </div>
+            <div class="row space">
+                <div class="col-md-1 bold">Salary</div>
+                <div class="col-md-4"><input type="text" class="form-control" asp-for="employee.Salary" /></div>
+                <div class="col-md-1 bold">Expected Salary</div>
+                <div class="col-md-4"><input type="text" class="form-control" asp-for="employee.ExpectedSalary" /></div>
+            </div>
+            <div class="row space">
+                <div class="col-md-1 bold">Department</div>
+                <div class="col-md-4"><select asp-items='new SelectList(Model.departments,"Id","Name")' asp-for="employee.Department_id"></select></div>
+                <div class="col-md-1 bold">Hire Date</div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" asp-for="employee.HireDate" />
+                    <span asp-validation-for="employee.HireDate"></span>
+
+
+                </div>
+            </div>
+            <div class="row space">
+                <div class="col-md-1 bold">Img URL</div>
+                <div class="col-md-4">
+                    <input type="file" style="display:none" id="fuimg" asp-for="profileImg" />
+                    <label for="fuimg" class="btn btn-primary">Upload </label>
+                    <span asp-validation-for="profileImg"></span>
+
+
+                </div>
+                <div class="col-md-1 col-md-offset-4">
+                    @{
+                        //if (@ViewData["flag"])
+                        //if (Model.employee == null)
+                        if (Model.Flag)
+                        {<input id="save" type="submit" class="btn btn-block" value="Save" asp-action="SaveData" />}
+                        else
+                        {<input id="save" type="submit" class="btn btn-block" value="Update" asp-action="Update" />}
+
+                    }
+                </div>
+            </div>
+
+
+
+
+
+            <div class="row space">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>name</th>
+                            <th>count</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DepartmentWithEmpCount != null && Model.DepartmentWithEmpCount.Count > 0)
+                        {
+                            @foreach (var item in Model.DepartmentWithEmpCount)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.EmployeeCount</td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+
+
+        </div>
+        @*@if (@ViewData["Message"] != null)*@
+        @if (Model.Message != null)
+        {
+            <script type="text/javascript">
+                @*document.getElementById("save").addEventListener("click", function(){ alert("@ViewBag.Message"); })*@
+        @*document.getElementById("save").addEventListener("click", function(){ Swal.fire('@ViewBag.Message'); })*@
+        @*window.onload = function () {
+                 Swal.fire('@ViewBag.Message');*@
+        window.onload = function () {
+            Swal.fire({
+                position: 'center',
+                icon: '@Model.Icone',
+                title: '@Model.Message',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            }
+            </script>
+        }
+    </form>
+}

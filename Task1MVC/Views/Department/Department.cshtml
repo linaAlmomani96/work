@@ -1,0 +1,42 @@
+﻿@model Department
+@{ 
+    ViewData["Title"] = "Department";
+}
+
+@section Body{ 
+<form method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">
+                <h1>Department</h1>
+            </div>
+        </div>
+        <div class="row space">
+            <input type="hidden" asp-for="Id" />
+            <div class="col-md-1"> Name</div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" asp-for="Name" />
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="col-md-1"> Description</div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" asp-for="Description" />
+            </div>
+        </div>
+        <div class="row space">
+            <div class="col-md-1 col-md-offset-8">
+                @{ 
+                    if (Model == null)
+                    { <input type="submit" class="btn btn-block" value="Save" asp-action="SaveData" />
+                    }
+                    else
+                    { <input type="submit" class="btn btn-block" value="Update" asp-action="Update" />}
+                    }
+            </div>
+
+        </div>
+
+    </div>
+</form>
+
+}

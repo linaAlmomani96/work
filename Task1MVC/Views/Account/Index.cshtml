@@ -1,0 +1,186 @@
+﻿@model VMLoginSingup
+@{
+    ViewData["Title"] = "LogIn or SignUp";
+
+}
+
+@section Body{
+    <div class="container">
+
+        <form method="post">
+            <div class="row space">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label class="control-label" asp-for="singin.Email"></label>
+                    </div>
+                    <div class="col-md-4">
+                        <input class="form-control"asp-for="singin.Email"/>
+                        <span asp-validation-for="singin.Email"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row space">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label class="control-label"asp-for="singin.Password"></label>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control" asp-for="singin.Password" />
+                        <span asp-validation-for="singin.Password"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="row space">
+                    <div class="form-group" style="margin-left:188px">
+                        <div class="col-md-6 col-md-offset-5" style="margin-left:12px">
+                            <input type="checkbox" asp-for="singin.RemeberMe" />
+                            <label class="control-label" asp-for="singin.RemeberMe"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row space">
+                    <div class="col-md-6 col-md-offset-">
+                        <input type="submit" class="btn btn-primary" style="width:200px; margin-left:250px" value="LogIn" asp-action="SingIn" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form method="post">
+            <div class="row space">
+                <!-- Button trigger modal -->
+                <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Launch demo modal
+                </button>-->
+                <!-- Modal -->
+                <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">SingUp</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                        <input placeholder="Name" class="form-control" />
+                                        <span></span>
+
+
+                                        <input placeholder="Email" class="form-control" />
+                                        <span></span>
+
+
+                                        <input placeholder="New Password" class="form-control" />
+                                        <span></span>
+
+
+                                        <input placeholder="CofirmPassword" class="form-control" />
+                                        <span></span>
+
+                                        <label class="control-label">Birthday</label>
+                                        <input type="date" class="form-control" />
+                                        <span></span>
+
+                                        <label class="control-label">Gender</label>
+                                        <input type="radio" name="rgender"  value="Male" />Male
+                                        <input type="radio" name="rgender"  value="Male" />Female
+
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+                <input type="button" value="Create New Account" data-target="#testmodal" data-toggle="modal" style="width:200px; margin-left:250px" class="btn btn-primary" />
+
+                <div class="modal fade" id="testmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">SingUp</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <label asp-for="singUp.Name"></label>
+                                    <input type="text" asp-for="singUp.Name" class="form-control" />
+                                    <span asp-validation-for="singUp.Name"></span>
+                                </div>
+                                <div>
+                                    <label asp-for="singUp.Email"></label>
+                                    <input type="text" class="form-control" asp-for="singUp.Email" />
+                                    <span asp-validation-for="singUp.Email"></span>
+                                </div>
+                                <div>
+                                    <label asp-for="singUp.Role_Id"></label>
+                                    <select asp-items='new SelectList(Model.roles,"Id","Name")' asp-for="singUp.Role_Id"></select>
+                                    <span asp-validation-for="singUp.Role_Id"></span>
+
+                                </div>
+                                <div>
+                                    <label asp-for="singUp.Birthday"></label>
+                                    <input type="date" class="form-control" style="width:250px" asp-for="singUp.Birthday" />
+                                    <span asp-validation-for="singUp.Birthday"></span>
+
+                                </div>
+
+                                <div>
+                                    <label asp-for="singUp.Password"></label>
+                                    <input type="password" class="form-control" asp-for="singUp.Password" />
+                                    <span asp-validation-for="singUp.Password"></span>
+                                </div>
+                                <div>
+                                    <label asp-for="singUp.ConfirmPassword"></label>
+                                    <input type="password" class="form-control" asp-for="singUp.ConfirmPassword" />
+                                    <span asp-validation-for="singUp.ConfirmPassword"></span>
+                                </div>
+                                <div>
+                                    <label asp-for="singUp.Gender"></label>
+                                    <input type="radio" name="rdgender" value="male" asp-for="singUp.Gender" />Male
+                                    <input type="radio" name="rdgender" value="female" asp-for="singUp.Gender" />Female
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="SingUp" class="btn btn-primary" asp-action="Register" />
+                                <input type="button" value="close" data-dismiss="modal" class="btn btn-primary" />
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+
+
+        @*<div class="row input-group">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-collapse-down"></span>
+                </span>
+                <input class="form-control" style="width:300px"/>
+            </div>*@
+
+        @*<div class="form-group ">
+                <label class="control-label " for="email">
+                    Email
+                </label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="glyphicon glyphicon-collapse-down"></i>
+                    </div>
+                    <input class="form-control" id="email" name="email" type="text" />
+                </div>
+            </div>*@
+
+
+
+
+
+}
